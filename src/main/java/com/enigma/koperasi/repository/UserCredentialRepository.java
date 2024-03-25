@@ -32,4 +32,7 @@ public interface UserCredentialRepository extends JpaRepository<UserCredential, 
 
   @Query(value = "SELECT * FROM m_user_credential WHERE id = :id", nativeQuery = true)
   Optional<UserCredential> findUserById(String id);
+
+  @Query(value = "SELECT * FROM m_user_credential WHERE username = :username", nativeQuery = true)
+  Optional<UserCredential> findByUsername(String username);
 }

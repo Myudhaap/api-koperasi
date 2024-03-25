@@ -19,6 +19,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
+  private final AuthTokenFilter authTokenFilter;
   private static final String[] WHITE_LIST_URL = {
       "/api/v1/**"
   };
@@ -44,7 +45,8 @@ public class SecurityConfiguration {
                 .anyRequest()
                 .authenticated()
         )
-        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+        .addFilterBefore(authTokenFilter, UsernamePasswordAuthenticationFilter.class);
 
     return http.build();
   }

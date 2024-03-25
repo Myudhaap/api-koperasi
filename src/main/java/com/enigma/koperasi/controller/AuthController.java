@@ -1,8 +1,10 @@
 package com.enigma.koperasi.controller;
 
 import com.enigma.koperasi.constant.AppPath;
+import com.enigma.koperasi.model.dto.request.auth.LoginAuthReq;
 import com.enigma.koperasi.model.dto.request.auth.RegisterAuthReq;
 import com.enigma.koperasi.model.dto.response.CommonResponse;
+import com.enigma.koperasi.model.dto.response.auth.LoginAuthRes;
 import com.enigma.koperasi.model.dto.response.auth.RegisterAuthRes;
 import com.enigma.koperasi.service.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -43,6 +45,20 @@ public class AuthController {
     return ResponseEntity.status(HttpStatus.CREATED)
         .body(CommonResponse.<RegisterAuthRes>builder()
             .message("Successfully register")
+            .data(res)
+            .build()
+        );
+  }
+
+  @PostMapping("/login")
+  public ResponseEntity<?> login(
+      @RequestBody LoginAuthReq req
+  ){
+    LoginAuthRes res = authService.login(req);
+
+    return ResponseEntity.status(HttpStatus.CREATED)
+        .body(CommonResponse.<LoginAuthRes>builder()
+            .message("Successfully login")
             .data(res)
             .build()
         );
