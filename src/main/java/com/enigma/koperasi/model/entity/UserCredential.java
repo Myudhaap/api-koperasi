@@ -19,13 +19,13 @@ public class UserCredential {
   @ManyToOne
   @JoinColumn(name = "role_id", referencedColumnName = "id")
   private Role role;
-  @Column(length = 100, nullable = false)
+  @Column(length = 100, nullable = false, unique = true)
   private String username;
   @Column(nullable = false)
   private String password;
 
-  @OneToOne(mappedBy = "userCredential")
+  @OneToOne(mappedBy = "userCredential", cascade = CascadeType.ALL)
   private Member member;
-  @OneToOne(mappedBy = "userCredential")
+  @OneToOne(mappedBy = "userCredential", cascade = CascadeType.ALL)
   private Employee employee;
 }

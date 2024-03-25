@@ -29,7 +29,7 @@ public class Member {
   private Cash cash;
   @Column(length = 100, nullable = false)
   private String name;
-  @Column(nullable = false)
+  @Column(nullable = true)
   private String address;
   @Column(nullable = false)
   private String email;

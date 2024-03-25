@@ -20,6 +20,7 @@ public class Position {
   @GeneratedValue(strategy = GenerationType.UUID)
   private String id;
   @Column(name = "position_name")
+  @Enumerated(EnumType.STRING)
   private EPosition positionName;
 
   @OneToMany(mappedBy = "position")

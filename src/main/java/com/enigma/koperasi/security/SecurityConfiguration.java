@@ -12,13 +12,14 @@ import org.springframework.security.config.annotation.web.configuration.EnableWe
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
-  private static final String[] WHITE_LIST = {
+  private static final String[] WHITE_LIST_URL = {
       "/api/v1/**"
   };
 
@@ -36,10 +37,14 @@ public class SecurityConfiguration {
         )
         .csrf(AbstractHttpConfigurer::disable)
         .authorizeHttpRequests(req ->
-          req.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
-              .requestMatchers(WHITE_LIST).permitAll()
-              .anyRequest().authenticated()
-        );
+            req.dispatcherTypeMatchers(DispatcherType.ERROR).permitAll()
+                .requestMatchers(WHITE_LIST_URL)
+                .permitAll()
+
+                .anyRequest()
+                .authenticated()
+        )
+        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
     return http.build();
   }

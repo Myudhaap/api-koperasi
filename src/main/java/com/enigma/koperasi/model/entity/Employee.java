@@ -35,9 +35,6 @@ public class Employee {
   private String email;
   @Column(nullable = false, length = 20)
   private String phone;
-  @Column(nullable = false)
-  @Enumerated(EnumType.STRING)
-  private EStatus status;
   @Column(name = "created_at")
   private LocalDateTime createdAt;
   @Column(name = "updated_at")
