@@ -20,7 +20,7 @@ public class EmployeeServiceImpl implements EmployeeService {
   public EmployeeRes save(Employee req) {
     req.setId(UUID.randomUUID().toString());
 
-    employeeRepository.save(req);
+    employeeRepository.insert(req);
     return employeeMapper.convertToDto(req);
   }
 }

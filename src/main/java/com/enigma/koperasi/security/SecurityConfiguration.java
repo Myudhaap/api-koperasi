@@ -21,7 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
   private final AuthTokenFilter authTokenFilter;
   private static final String[] WHITE_LIST_URL = {
-      "/api/v1/**"
+      "/api/v1/auth/**",
   };
 
   @Bean

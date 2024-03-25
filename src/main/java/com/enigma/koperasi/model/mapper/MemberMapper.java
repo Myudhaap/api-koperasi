@@ -16,7 +16,7 @@ public class MemberMapper {
   private final UserCredentialMapper userCredentialMapper;
   private final CashMapper cashMapper;
 
-  public Member convertToEntity(MemberReq req, UserCredential userCredential, Cash cash){
+  public Member convertToEntity(MemberReq req){
     return Member.builder()
         .id(req.getId())
         .name(req.getName())
@@ -28,8 +28,21 @@ public class MemberMapper {
         .createdAt(req.getCreatedAt())
         .updatedAt(req.getUpdatedAt())
         .isActive(true)
-        .cash(cash)
-        .userCredential(userCredential)
+        .build();
+  }
+  public Member convertToEntity(MemberRes req){
+    return Member.builder()
+        .id(req.getId())
+        .name(req.getName())
+        .email(req.getEmail())
+        .phone(req.getPhone())
+        .status(req.getStatus())
+        .address(req.getAddress())
+        .birthOfDate(req.getBirthOfDate())
+        .createdAt(req.getCreatedAt())
+        .updatedAt(req.getUpdatedAt())
+        .cash(cashMapper.convertToEntity(req.getCash()))
+        .isActive(req.isActive())
         .build();
   }
 
@@ -44,9 +57,8 @@ public class MemberMapper {
         .birthOfDate(req.getBirthOfDate())
         .createdAt(req.getCreatedAt())
         .updatedAt(req.getUpdatedAt())
-        .isActive(true)
+        .isActive(req.isActive())
         .cash(cashMapper.convertToDto(req.getCash()))
-        .userCredential(userCredentialMapper.convertToDto(req.getUserCredential()))
         .build();
   }
 }
