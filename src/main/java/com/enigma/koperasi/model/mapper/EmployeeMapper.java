@@ -28,10 +28,23 @@ public class EmployeeMapper {
         .build();
   }
 
+  public  Employee convertToEntity(EmployeeRes req){
+    return Employee.builder()
+        .id(req.getId())
+        .position(positionMapper.convertToEntity(req.getPosition()))
+        .name(req.getName())
+        .address(req.getAddress())
+        .email(req.getEmail())
+        .phone(req.getPhone())
+        .createdAt(req.getCreatedAt())
+        .updatedAt(req.getUpdatedAt())
+        .isActive(req.isActive())
+        .build();
+  }
+
   public  EmployeeRes convertToDto(Employee req){
     return EmployeeRes.builder()
         .id(req.getId())
-        .userCredential(userCredentialMapper.convertToDto(req.getUserCredential()))
         .position(positionMapper.convertToDto(req.getPosition()))
         .name(req.getName())
         .address(req.getAddress())

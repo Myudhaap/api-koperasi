@@ -16,7 +16,7 @@ public interface RoleRepository extends JpaRepository<Role, String> {
   @Query(value = """
     INSERT INTO m_role
     VALUES (
-      :#{#role.id}, 
+      :#{#role.id},
       :#{#role.roleName.name()}
     );
 """, nativeQuery = true)

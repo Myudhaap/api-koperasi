@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @Builder
 public class EmployeeRes {
   private String id;
-  private UserCredentialRes userCredential;
   private PositionRes position;
   private String name;
   private String address;
