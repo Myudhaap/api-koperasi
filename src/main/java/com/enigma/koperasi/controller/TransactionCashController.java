@@ -11,6 +11,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -22,7 +23,9 @@ import java.util.List;
 public class TransactionCashController {
   private final TransactionCashService transactionCashService;
 
+
   @PostMapping
+  @PreAuthorize("hasAnyRole('ADMIN')")
   public ResponseEntity<?> transaction(
     @RequestBody TransactionCashReq req
   ){
@@ -37,6 +40,7 @@ public class TransactionCashController {
   }
 
   @GetMapping
+  @PreAuthorize("hasAnyRole('ADMIN')")
   public ResponseEntity<?> findAll(
       @RequestParam(name = "member-name", required = false) String memberName,
       @RequestParam(name = "employee-name", required = false) String employeeName,

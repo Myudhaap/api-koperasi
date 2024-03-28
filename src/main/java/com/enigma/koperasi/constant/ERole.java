@@ -1,5 +1,5 @@
 package com.enigma.koperasi.constant;
 
 public enum ERole {
-  MEMBER, ADMIN
+  ROLE_MEMBER, ROLE_ADMIN
 }

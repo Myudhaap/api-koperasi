@@ -54,7 +54,7 @@ public class AuthServiceImpl implements AuthService {
   public RegisterAuthRes registerMember(RegisterAuthReq req) {
     try {
       RoleReq roleReq = RoleReq.builder()
-          .role(ERole.MEMBER)
+          .role(ERole.ROLE_MEMBER)
           .build();
       RoleRes roleRes = roleService.getOrSave(roleReq);
 
@@ -101,7 +101,7 @@ public class AuthServiceImpl implements AuthService {
   public RegisterAuthRes registerAdmin(RegisterAuthReq req) {
     try{
       RoleReq roleReq = RoleReq.builder()
-          .role(ERole.ADMIN)
+          .role(ERole.ROLE_ADMIN)
           .build();
       RoleRes roleRes = roleService.getOrSave(roleReq);
 
