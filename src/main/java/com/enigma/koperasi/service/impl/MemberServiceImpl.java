@@ -4,6 +4,7 @@ import com.enigma.koperasi.exception.ApplicationException;
 import com.enigma.koperasi.model.dto.request.member.MemberReq;
 import com.enigma.koperasi.model.dto.request.member.UpdateMemberReq;
 import com.enigma.koperasi.model.dto.response.member.MemberRes;
+import com.enigma.koperasi.model.entity.Employee;
 import com.enigma.koperasi.model.entity.Member;
 import com.enigma.koperasi.model.mapper.MemberMapper;
 import com.enigma.koperasi.repository.MemberRepository;
@@ -45,6 +46,18 @@ public class MemberServiceImpl implements MemberService {
   @Override
   public MemberRes findById(String id) {
     Member member = memberRepository.findMemberById(id).orElseThrow(() ->
+        new ApplicationException(
+            HttpStatus.NOT_FOUND.name(),
+            "Member not found",
+            HttpStatus.NOT_FOUND
+        ));
+
+    return memberMapper.convertToDto(member);
+  }
+
+  @Override
+  public MemberRes findByUserCredentialId(String userId) {
+    Member member = memberRepository.findByUserCredentialId(userId).orElseThrow(() ->
         new ApplicationException(
             HttpStatus.NOT_FOUND.name(),
             "Member not found",

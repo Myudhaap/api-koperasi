@@ -33,4 +33,13 @@ public class CashMapper {
         .status(req.getStatus())
         .build();
   }
+
+  public CashReq convertToReq(CashRes req){
+    return CashReq.builder()
+        .id(req.getId())
+        .description(req.getDescription())
+        .totalCash(req.getTotalCash())
+        .status(req.getStatus())
+        .build();
+  }
 }

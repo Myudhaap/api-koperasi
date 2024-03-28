@@ -81,6 +81,18 @@ public class EmployeeServiceImpl implements EmployeeService {
   }
 
   @Override
+  public EmployeeRes findByUserCredentialId(String userId) {
+    Employee employee = employeeRepository.findByUserCredentialId(userId).orElseThrow(() ->
+        new ApplicationException(
+            HttpStatus.NOT_FOUND.name(),
+            "Employee not found",
+            HttpStatus.NOT_FOUND
+        ));
+
+    return employeeMapper.convertToDto(employee);
+  }
+
+  @Override
   public void delete(String id) {
     EmployeeRes employeeRes = findByid(id);
     employeeRes.setActive(false);

@@ -10,6 +10,7 @@ public interface EmployeeService {
   EmployeeRes save(Employee req);
   Page<EmployeeRes> findAll(int page, int size);
   EmployeeRes findByid(String id);
+  EmployeeRes findByUserCredentialId(String userId);
   EmployeeRes update(UpdateEmployeeReq req);
   void delete(String id);
 }

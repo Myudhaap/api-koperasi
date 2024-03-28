@@ -71,4 +71,6 @@ public interface EmployeeRepository extends JpaRepository<Employee, String> {
       value = "SELECT * FROM m_employee WHERE id = :id"
   )
   Optional<Employee> findById(String id);
+
+  Optional<Employee> findByUserCredentialId(String id);
 }

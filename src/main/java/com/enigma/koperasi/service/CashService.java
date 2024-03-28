@@ -5,4 +5,5 @@ import com.enigma.koperasi.model.dto.response.cash.CashRes;
 
 public interface CashService {
   CashRes save(CashReq req);
+  CashRes findById(String id);
 }

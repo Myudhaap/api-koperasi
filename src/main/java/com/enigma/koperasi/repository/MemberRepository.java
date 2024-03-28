@@ -71,4 +71,6 @@ public interface MemberRepository extends JpaRepository<Member, String> {
 
   @Query(value = "SELECT * FROM m_member WHERE id = :id", nativeQuery = true)
   Optional<Member> findMemberById(@NonNull String id);
+
+  Optional<Member> findByUserCredentialId(String id);
 }
