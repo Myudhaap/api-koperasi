@@ -21,6 +21,5 @@ public class TransactionCashRes {
   private String employee;
   private Date trxDate;
   private Long amount;
-  private Long totalAmount;
   private String description;
 }

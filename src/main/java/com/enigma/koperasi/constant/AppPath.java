@@ -10,6 +10,9 @@ public class AppPath {
   public static final String POSITION_PATH = PREFIX_PATH + "/position";
   public static final String TYPE_TRX_CASH = PREFIX_PATH + "/type-cash";
   public static final String TRX_CASH_PATH = PREFIX_PATH + "/transaction-cash";
+  public static final String LOANTYPE = PREFIX_PATH + "/loan-types";
+  public static final String INSTALMENTYPE = PREFIX_PATH + "/instalment-types";
+  public static final String TRANSACTION = PREFIX_PATH + "/transactions";
 
   public static final String BY_ID = "/{id}";
 }

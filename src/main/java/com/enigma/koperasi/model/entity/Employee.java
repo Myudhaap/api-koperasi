@@ -45,4 +45,6 @@ public class Employee {
 
   @OneToMany(mappedBy = "employee")
   private List<TransactionSaving> transactionSavings;
+  @OneToMany(mappedBy = "employee")
+  private List<LoanTransaction> loanTransactions;
 }

@@ -9,4 +9,9 @@ public class DbPath {
   public static final String POSITION_SCHEMA = "m_position";
   public static final String TRX_CASH = "t_trx_cash";
   public static final String TYPE_TRX_SCHEMA = "m_type_trx_cash";
+  public static final String INSTALMENT_TYPE_SCHEMA = "t_instalment_type";
+  public static final String LOAN_TYPE_SCHEMA = "t_loan_type";
+
+  public static final String TRANSACTION_SCHEMA = "trx_loan";
+  public static final String TRANSACTION_DETAIL_SCHEMA = "trx_loan_detail";
 }

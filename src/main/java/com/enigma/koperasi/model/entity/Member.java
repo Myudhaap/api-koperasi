@@ -50,4 +50,6 @@ public class Member {
 
   @OneToMany(mappedBy = "member")
   private List<TransactionSaving> transactionSavings;
+  @OneToMany(mappedBy = "member")
+  private List<LoanTransaction> loanTransactions;
 }

@@ -15,7 +15,6 @@ public class TransactionCashMapper {
         .typeCash(req.getTypeCash().getTypeCashName())
         .trxDate(req.getTrxDate())
         .amount(req.getAmount())
-        .totalAmount(cashReq.getTotalCash())
         .description(req.getDescription())
         .build();
   }
@@ -28,7 +27,6 @@ public class TransactionCashMapper {
         .typeCash(req.getTypeCash().getTypeCashName())
         .trxDate(req.getTrxDate())
         .amount(req.getAmount())
-        .totalAmount(req.getMember().getCash().getTotalCash())
         .description(req.getDescription())
         .build();
   }
