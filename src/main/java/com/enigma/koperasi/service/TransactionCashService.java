@@ -20,5 +20,5 @@ public interface TransactionCashService {
       int size
   );
 
-  Page<TransactionCashRes> findByMember(int page, int size);
+  Page<TransactionCashRes> findByMember(String memberId, int page, int size);
 }

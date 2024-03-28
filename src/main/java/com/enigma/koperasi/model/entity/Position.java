@@ -22,6 +22,9 @@ public class Position {
   @Column(name = "position_name")
   @Enumerated(EnumType.STRING)
   private EPosition positionName;
+  @Column(name = "is_active")
+  @Builder.Default
+  private boolean isActive = true;
 
   @OneToMany(mappedBy = "position")
   private List<Employee> employees;

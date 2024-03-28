@@ -1,6 +1,8 @@
 package com.enigma.koperasi.repository;
 
 import com.enigma.koperasi.model.entity.Cash;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -50,4 +52,11 @@ public interface CashRepository extends JpaRepository<Cash, String> {
   }
 
   Optional<Cash> findCashById(String id);
+
+  @Query(
+      nativeQuery = true,
+      value = "SELECT * FROM m_cash",
+      countQuery = "SELECT COUNT(*) FROM m_cash"
+  )
+  Page<Cash> findCashAll(Pageable pageable);
 }

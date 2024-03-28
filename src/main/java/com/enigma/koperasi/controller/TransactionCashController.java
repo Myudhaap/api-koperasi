@@ -72,12 +72,14 @@ public class TransactionCashController {
         );
   }
 
-  @GetMapping("/member")
+  @GetMapping(AppPath.BY_ID)
   public ResponseEntity<?> findByMember(
+      @PathVariable(name = "id") String memberId,
       @RequestParam(defaultValue = "1") int page,
       @RequestParam(defaultValue = "5") int size
       ){
     Page<TransactionCashRes> res = transactionCashService.findByMember(
+        memberId,
         page,
         size
     );

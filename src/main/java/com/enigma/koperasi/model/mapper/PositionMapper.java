@@ -18,6 +18,7 @@ public class PositionMapper {
     return Position.builder()
         .id(req.getId())
         .positionName(req.getPosition())
+        .isActive(req.isActive())
         .build();
   }
 
@@ -25,6 +26,7 @@ public class PositionMapper {
     return PositionRes.builder()
         .id(req.getId())
         .position(req.getPositionName())
+        .isActive(req.isActive())
         .build();
   }
 }
