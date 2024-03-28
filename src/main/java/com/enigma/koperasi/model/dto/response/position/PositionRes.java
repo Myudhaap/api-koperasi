@@ -13,4 +13,5 @@ import lombok.NoArgsConstructor;
 public class PositionRes {
   private String id;
   private EPosition position;
+  private boolean isActive;
 }

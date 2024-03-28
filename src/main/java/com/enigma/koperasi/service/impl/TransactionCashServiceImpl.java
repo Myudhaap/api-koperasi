@@ -163,13 +163,10 @@ public class TransactionCashServiceImpl implements TransactionCashService {
   }
 
   @Override
-  public Page<TransactionCashRes> findByMember(int page, int size) {
+  public Page<TransactionCashRes> findByMember(String memberId, int page, int size) {
     Pageable pageable = PageRequest.of(page - 1, size);
-    SecurityContext authentication = SecurityContextHolder.getContext();
-    AppUser user = (AppUser) authentication.getAuthentication().getPrincipal();
-    MemberRes memberRes = memberService.findByUserCredentialId(user.getId());
 
-    Page<TransactionSaving> transactionSavings = transactionCashRepository.findByMemberId(memberRes.getId(), pageable);
+    Page<TransactionSaving> transactionSavings = transactionCashRepository.findByMemberId(memberId, pageable);
 
     List<TransactionCashRes> transactionCashRes = transactionSavings.getContent().stream()
         .map(transactionCashMapper::convertToDto).toList();
