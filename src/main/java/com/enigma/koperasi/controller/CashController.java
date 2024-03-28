@@ -10,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -21,6 +22,7 @@ public class CashController {
   private final CashService cashService;
 
   @GetMapping
+  @PreAuthorize("hasAnyRole('ADMIN')")
   public ResponseEntity<?> getAll(
       @RequestParam(defaultValue = "1") int page,
       @RequestParam(defaultValue = "5") int size
@@ -55,6 +57,7 @@ public class CashController {
   }
 
   @PutMapping
+  @PreAuthorize("hasAnyRole('ADMIN')")
   public ResponseEntity<?> update(
     @RequestBody CashReq req
   ){
