@@ -21,6 +21,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 public class SecurityConfiguration {
   private final AuthTokenFilter authTokenFilter;
   private static final String[] WHITE_LIST_URL = {
+      "/swagger-ui/**", "/v3/api-docs/**",
       "/api/v1/auth/**",
   };
 

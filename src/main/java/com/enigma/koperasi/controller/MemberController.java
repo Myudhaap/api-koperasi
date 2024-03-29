@@ -7,6 +7,7 @@ import com.enigma.koperasi.model.dto.response.CommonResponse;
 import com.enigma.koperasi.model.dto.response.PagingResponse;
 import com.enigma.koperasi.model.dto.response.member.MemberRes;
 import com.enigma.koperasi.service.MemberService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(AppPath.MEMBER_PATH)
 @RequiredArgsConstructor
+@SecurityRequirement(name = "Bearer Authentication")
 public class MemberController {
   private final MemberService memberService;
 

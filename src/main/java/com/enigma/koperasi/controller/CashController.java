@@ -6,6 +6,7 @@ import com.enigma.koperasi.model.dto.response.CommonResponse;
 import com.enigma.koperasi.model.dto.response.PagingResponse;
 import com.enigma.koperasi.model.dto.response.cash.CashRes;
 import com.enigma.koperasi.service.CashService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(AppPath.CASH_PATH)
+@SecurityRequirement(name = "Bearer Authentication")
 public class CashController {
   private final CashService cashService;
 

@@ -6,6 +6,7 @@ import com.enigma.koperasi.model.dto.response.CommonResponse;
 import com.enigma.koperasi.model.dto.response.PagingResponse;
 import com.enigma.koperasi.model.dto.response.employee.EmployeeRes;
 import com.enigma.koperasi.service.EmployeeService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(AppPath.EMPLOYEE_PATH)
+@SecurityRequirement(name = "Bearer Authentication")
 public class EmployeeController {
   private final EmployeeService employeeService;
 
