@@ -3,9 +3,11 @@ package com.enigma.koperasi.controller;
 import com.enigma.koperasi.constant.AppPath;
 import com.enigma.koperasi.model.dto.request.instalment.InstalmentTypeReq;
 import com.enigma.koperasi.model.dto.response.CommonResponse;
+import com.enigma.koperasi.model.dto.response.PagingResponse;
 import com.enigma.koperasi.model.dto.response.instalment.InstalmentTypeRes;
 import com.enigma.koperasi.service.InstalmentTypeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -64,13 +66,21 @@ public class InstalmentTypeController {
   }
 
   @GetMapping
-  public ResponseEntity<?> getAll(){
-    List<InstalmentTypeRes> res = instalmentTypeService.findAll();
+  public ResponseEntity<?> getAll(
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "5") int size
+  ){
+    Page<InstalmentTypeRes> res = instalmentTypeService.findAll(page, size);
 
     return ResponseEntity.status(HttpStatus.CREATED)
         .body(CommonResponse.<List<InstalmentTypeRes>>builder()
             .message("Successfully get all Instalment type")
-            .data(res)
+            .data(res.getContent())
+            .paging(PagingResponse.builder()
+                .currentPage(page)
+                .totalPage(res.getTotalPages())
+                .totalSize(res.getTotalElements())
+                .build())
             .build()
         );
   }

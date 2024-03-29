@@ -16,12 +16,13 @@ public class TransactionDetailServiceImpl implements TransactionDetailService {
 
   @Override
   public LoanTransactionDetail save(LoanTransactionDetail req) {
-    return transactionDetailRepository.saveAndFlush(req);
+    transactionDetailRepository.storeAndFlush(req);
+    return req;
   }
 
   @Override
   public LoanTransactionDetail findById(String id) {
-    return transactionDetailRepository.findById(id)
+    return transactionDetailRepository.findLoanTransactionDetailById(id)
         .orElseThrow(() -> new ApplicationException(
             HttpStatus.NOT_FOUND.name(),
             "Loan transaction detail not found",

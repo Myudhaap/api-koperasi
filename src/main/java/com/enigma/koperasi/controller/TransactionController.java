@@ -5,9 +5,11 @@ import com.enigma.koperasi.model.dto.request.transaction_loan.TransactionApprove
 import com.enigma.koperasi.model.dto.request.transaction_loan.TransactionPayReq;
 import com.enigma.koperasi.model.dto.request.transaction_loan.TransactionReq;
 import com.enigma.koperasi.model.dto.response.CommonResponse;
+import com.enigma.koperasi.model.dto.response.PagingResponse;
 import com.enigma.koperasi.model.dto.response.transaction_loan.TransactionRes;
 import com.enigma.koperasi.service.TransactionService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -37,13 +39,21 @@ public class TransactionController {
   }
 
   @GetMapping
-  public ResponseEntity<?> getAll(){
-    List<TransactionRes> res = transactionService.findAll();
+  public ResponseEntity<?> getAll(
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "5") int size
+  ){
+    Page<TransactionRes> res = transactionService.findAll(page, size);
 
     return ResponseEntity.status(HttpStatus.OK)
         .body(CommonResponse.<List<TransactionRes>>builder()
             .message("Successfully get all transaction")
-            .data(res)
+            .data(res.getContent())
+            .paging(PagingResponse.builder()
+                .currentPage(page)
+                .totalPage(res.getTotalPages())
+                .totalSize(res.getTotalElements())
+                .build())
             .build()
         );
   }

@@ -8,6 +8,10 @@ import com.enigma.koperasi.model.mapper.LoanTypeMapper;
 import com.enigma.koperasi.repository.LoanTypeRepository;
 import com.enigma.koperasi.service.LoanTypeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -22,7 +26,7 @@ public class LoanTypeServiceImpl implements LoanTypeService {
   @Override
   public LoanTypeRes create(LoanTypeReq req) {
     LoanType loanType = loanTypeMapper.convertToEntity(req);
-    loanTypeRepository.save(loanType);
+    loanTypeRepository.store(loanType);
 
     return loanTypeMapper.convertToDto(loanType);
   }
@@ -31,8 +35,11 @@ public class LoanTypeServiceImpl implements LoanTypeService {
   public LoanTypeRes update(LoanTypeReq req) {
     LoanTypeRes existLoanType = findById(req.getId());
 
-    LoanType loanType = loanTypeMapper.convertToEntity(req);
-    loanTypeRepository.save(loanType);
+    LoanType loanType = loanTypeMapper.convertToEntity(existLoanType);
+    loanType.setInterest(req.getInterest());
+    loanType.setType(req.getType());
+    loanType.setMaxLoan(req.getMaxLoan());
+    loanTypeRepository.store(loanType);
 
     return loanTypeMapper.convertToDto(loanType);
   }
@@ -43,21 +50,25 @@ public class LoanTypeServiceImpl implements LoanTypeService {
 
     LoanType loanType = loanTypeMapper.convertToEntity(existLoanType);
     loanType.setActive(false);
-    loanTypeRepository.save(loanType);
+    loanTypeRepository.store(loanType);
   }
 
   @Override
-  public List<LoanTypeRes> findAll() {
-    List<LoanType> loanTypes = loanTypeRepository.findAll();
+  public Page<LoanTypeRes> findAll(int page, int size) {
+    Pageable pageable = PageRequest.of(page - 1, size);
 
-    return loanTypes.stream()
+    Page<LoanType> loanTypes = loanTypeRepository.findLoanTypeAll(pageable);
+
+    List<LoanTypeRes> loanTypeRes = loanTypes.getContent().stream()
         .map(loanTypeMapper::convertToDto)
         .toList();
+
+    return  new PageImpl<>(loanTypeRes, pageable, loanTypes.getTotalElements());
   }
 
   @Override
   public LoanTypeRes findById(String id) {
-    LoanType loanType = loanTypeRepository.findById(id)
+    LoanType loanType = loanTypeRepository.findLoanTypeById(id)
         .orElseThrow(() -> new ApplicationException(
             HttpStatus.NOT_FOUND.name(),
             "Loan Type not found",

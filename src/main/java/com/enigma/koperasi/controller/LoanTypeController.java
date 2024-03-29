@@ -3,9 +3,11 @@ package com.enigma.koperasi.controller;
 import com.enigma.koperasi.constant.AppPath;
 import com.enigma.koperasi.model.dto.request.loan.LoanTypeReq;
 import com.enigma.koperasi.model.dto.response.CommonResponse;
+import com.enigma.koperasi.model.dto.response.PagingResponse;
 import com.enigma.koperasi.model.dto.response.loan.LoanTypeRes;
 import com.enigma.koperasi.service.LoanTypeService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -64,13 +66,21 @@ public class LoanTypeController {
   }
 
   @GetMapping
-  public ResponseEntity<?> getAll(){
-    List<LoanTypeRes> res = loanTypeService.findAll();
+  public ResponseEntity<?> getAll(
+      @RequestParam(defaultValue = "1") int page,
+      @RequestParam(defaultValue = "5") int size
+  ){
+    Page<LoanTypeRes> res = loanTypeService.findAll(page, size);
 
     return ResponseEntity.status(HttpStatus.CREATED)
         .body(CommonResponse.<List<LoanTypeRes>>builder()
             .message("Successfully get all loan type")
-            .data(res)
+            .data(res.getContent())
+            .paging(PagingResponse.builder()
+                .currentPage(page)
+                .totalPage(res.getTotalPages())
+                .totalSize(res.getTotalElements())
+                .build())
             .build()
         );
   }

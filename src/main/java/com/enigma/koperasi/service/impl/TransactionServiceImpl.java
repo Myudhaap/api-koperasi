@@ -14,6 +14,10 @@ import com.enigma.koperasi.repository.TransactionRepository;
 import com.enigma.koperasi.service.*;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -31,7 +35,6 @@ public class TransactionServiceImpl implements TransactionService {
   private final LoanTypeService loanTypeService;
   private final MemberService memberService;
   private final InstalmentTypeService instalmentTypeService;
-  private final UserService userService;
   private final EmployeeService employeeService;
 
   private final LoanTypeMapper loanTypeMapper;
@@ -61,23 +64,27 @@ public class TransactionServiceImpl implements TransactionService {
         .nominal(req.getNominal())
         .createdAt(Instant.now().toEpochMilli())
         .build();
-    transactionRepository.save(transaction);
+    transactionRepository.store(transaction);
 
     return transactionMapper.convertToDto(transaction);
   }
 
   @Override
-  public List<TransactionRes> findAll() {
-    List<LoanTransaction> loanTransactions = transactionRepository.findAll();
+  public Page<TransactionRes> findAll(int page, int size) {
+    Pageable pageable = PageRequest.of(page - 1, size);
 
-    return loanTransactions.stream()
+    Page<LoanTransaction> loanTransactions = transactionRepository.findLoanTransactionAll(pageable);
+
+    List<TransactionRes> transactionRes = loanTransactions.getContent().stream()
         .map(transactionMapper::convertToDto)
         .toList();
+
+    return new PageImpl<>(transactionRes, pageable, loanTransactions.getTotalElements());
   }
 
   @Override
   public TransactionRes findById(String id) {
-    LoanTransaction loanTransaction = transactionRepository.findById(id)
+    LoanTransaction loanTransaction = transactionRepository.findLoanTransactionById(id)
         .orElseThrow(() -> new ApplicationException(
             HttpStatus.NOT_FOUND.name(),
             "Transaction not found",
@@ -134,7 +141,7 @@ public class TransactionServiceImpl implements TransactionService {
             }).toList();
 
     transaction.setLoanTransactionDetails(loanTransactionDetails);
-    transactionRepository.saveAndFlush(transaction);
+    transactionRepository.storeAndFlush(transaction);
 
     return transactionMapper.convertToDto(transaction);
   }
@@ -172,7 +179,7 @@ public class TransactionServiceImpl implements TransactionService {
     transaction.setApprovedAt(Instant.now().toEpochMilli());
     transaction.setUpdatedAt(Instant.now().toEpochMilli());
 
-    transactionRepository.saveAndFlush(transaction);
+    transactionRepository.storeAndFlush(transaction);
 
     return transactionMapper.convertToDto(transaction);
   }
