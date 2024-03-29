@@ -10,9 +10,8 @@ The API Koperasi Information System is a Backend Application created to help dev
     <li>Management Member</li>
     <li>Management Employee</li>
     <li>Management Position</li>
-    <li>Management Position</li>
+    <li>Management Instalment and Loan Type</li>
     <li>Management Cash</li>
-    <li>Management Loan</li>
     <li>Transaction Loan</li>
     <li>Transaction Saving or Withdraw Cash</li>
 </ul>
